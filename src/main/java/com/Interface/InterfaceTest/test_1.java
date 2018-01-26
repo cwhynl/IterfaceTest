@@ -88,19 +88,46 @@ public class test_1 {
 //			};
 //		}.start();
 		//40个人帮忙打call
-		for(int i=0;i<40;i++){
+//		for(int i=0;i<40;i++){
+//			   final int index = i;
+//				new Thread(){
+//					public void run(){
+//						String param1="{\"communityId\":\"d49f13efa5189efdf2d2902968393e3c\",\"uid\":\"e0beac091262d1c4a0ce9346c0eaa8d7\",\"unionid\":\"oEnhTwbMXZdemUQwITCy6CMaRBEk\"}";
+//						JSONObject ob1=JSONObject.fromObject(param1);
+//						ob1.put("unionid", unionid3[index]);
+//						HttpclientRequest.send_post("https://light.house.api.ziwork.com/wx/call/getClickTest",ob1,"集call用户2",2);
+//					};
+//				}.start();
+//			}
+		int s=1;
+		int time=0;
+		for(int i=1;i<=s;i++){
 			   final int index = i;
+			   final int tt = time;
 				new Thread(){
 					public void run(){
-						String param1="{\"communityId\":\"d49f13efa5189efdf2d2902968393e3c\",\"uid\":\"e0beac091262d1c4a0ce9346c0eaa8d7\",\"unionid\":\"oEnhTwbMXZdemUQwITCy6CMaRBEk\"}";
+						String param1="{\"course_id\":\"bd8371fddcd070dcc1cfd934f1dafed1\",\"type\":1}";
 						JSONObject ob1=JSONObject.fromObject(param1);
-						ob1.put("unionid", unionid3[index]);
-						HttpclientRequest.send_post("https://light.house.api.ziwork.com/wx/call/getClickTest",ob1,"集call用户2");
+//						ob1.put("unionid", unionid3[index]);
+						HttpclientRequest.send_post("http://stg.ziwork.com/zikeserver/wap/course/info",ob1,"13700000000",index);
 					};
 				}.start();
-			}
-		
-	}
+			}		
+	
+	//http://stg.ziwork.com/zikeserver/wap/voicebook/info
+	for(int i=1+s;i<=s+s;i++){
+		   final int index = i;
+			new Thread(){
+				public void run(){
+					String param1="{\"voicebook_id\":\"51dd46e572ee7475da9a3af67b643bf4\", \"type\": 1}";
+					JSONObject ob1=JSONObject.fromObject(param1);
+//					ob1.put("unionid", unionid3[index]);
+					HttpclientRequest.send_post("http://stg.ziwork.com/zikeserver/wap/voicebook/info",ob1,"13700000000",index);
+				};
+			}.start();
+		}	
+	System.out.println("平均响应时长为："+HttpclientRequest.d/(s*2));
+}
 
 	public static void main(String[] args) {
 		severval_thread();

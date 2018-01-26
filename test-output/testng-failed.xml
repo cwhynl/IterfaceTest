@@ -6,4 +6,13 @@
       <class name="com.Interface.InterfaceTest.NewTest"/>
     </classes>
   </test> <!-- Default test -->
+  <test name="Default test(failed)">
+    <classes>
+      <class name="com.Interface.InterfaceTest.NewTest">
+        <methods>
+          <include name="case3"/>
+        </methods>
+      </class> <!-- com.Interface.InterfaceTest.NewTest -->
+    </classes>
+  </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
