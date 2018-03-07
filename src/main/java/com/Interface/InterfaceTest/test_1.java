@@ -1,5 +1,6 @@
 package com.Interface.InterfaceTest;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -99,7 +100,7 @@ public class test_1 {
 //					};
 //				}.start();
 //			}
-		int s=1;
+		int s=100;
 		int time=0;
 		for(int i=1;i<=s;i++){
 			   final int index = i;
@@ -115,22 +116,83 @@ public class test_1 {
 			}		
 	
 	//http://stg.ziwork.com/zikeserver/wap/voicebook/info
-	for(int i=1+s;i<=s+s;i++){
-		   final int index = i;
-			new Thread(){
-				public void run(){
-					String param1="{\"voicebook_id\":\"51dd46e572ee7475da9a3af67b643bf4\", \"type\": 1}";
-					JSONObject ob1=JSONObject.fromObject(param1);
-//					ob1.put("unionid", unionid3[index]);
-					HttpclientRequest.send_post("http://stg.ziwork.com/zikeserver/wap/voicebook/info",ob1,"13700000000",index);
-				};
-			}.start();
-		}	
-	System.out.println("平均响应时长为："+HttpclientRequest.d/(s*2));
+		//http://stg.ziwork.com/zikeserver/wap/course/list小课列表
+		//http://stg.ziwork.com/zikeserver/wap/article/lists小文列表
+		//http://stg.ziwork.com/zikeserver/wap/article/details小文详情
+		//
+//	for(int i=1+s;i<=s+s;i++){
+//		   final int index = i;
+//			new Thread(){
+//				public void run(){
+//					String param1="{\"voicebook_id\":\"51dd46e572ee7475da9a3af67b643bf4\", \"type\": 1}";
+//					JSONObject ob1=JSONObject.fromObject(param1);
+////					ob1.put("unionid", unionid3[index]);
+//					HttpclientRequest.send_post("http://stg.ziwork.com/zikeserver/wap/voicebook/info",ob1,"13700000000",index);
+//				};
+//			}.start();
+//		}	
+//	System.out.println("平均响应时长为："+HttpclientRequest.d/(s*2));
+		
+//		for(int i=1+s;i<=s+s;i++){
+//			   final int index = i;
+//				new Thread(){
+//					public void run(){
+//						String param1="{\"voicebook_id\":\"51dd46e572ee7475da9a3af67b643bf4\", \"type\": 1}";
+//						JSONObject ob1=JSONObject.fromObject(param1);
+////						ob1.put("unionid", unionid3[index]);
+//						HttpclientRequest.send_post("http://stg.ziwork.com/zikeserver/wap/voicebook/info",ob1,"13700000000",index);
+//					};
+//				}.start();
+//			}		
+		
 }
-
+//首页
+	public static void test_get(){
+		int s=100;
+		for(int i=1+s;i<=s+s;i++){
+			   final int index = i;
+				new Thread(){
+					public void run(){
+//						String param1="{\"voicebook_id\":\"51dd46e572ee7475da9a3af67b643bf4\", \"type\": 1}";
+//						JSONObject ob1=JSONObject.fromObject(param1);
+//						ob1.put("unionid", unionid3[index]);
+						try {
+							HttpclientRequest.pub_get("http://stg.ziwork.com/zikeweb/index",index);
+						} catch (UnsupportedOperationException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						};
+					};
+				}.start();
+			}	
+	}
+	
+	public static void pub_post(final String url,final String param){
+		int s=1;
+		for(int i=1+s;i<=s+s;i++){
+			   final int index = i;
+				new Thread(){
+					public void run(){
+						String param1=param;
+						JSONObject ob1=JSONObject.fromObject(param1);
+//						ob1.put("unionid", unionid3[index]);
+						HttpclientRequest.send_post(url,ob1,"13700000000",index);
+					};
+				}.start();
+			}		
+	}
+	
+	
+	
 	public static void main(String[] args) {
-		severval_thread();
+//		severval_thread();
+//		test_get();
+//		pub_post("http://stg.ziwork.com/zikeserver/wap/course/list","{\"page\": 1,\"page_count\": 20,\"type\": 1}");
+		pub_post("http://stg.ziwork.com/zikeserver/wap/article/lists","{\"page\": 1, \"page_count\": 20}");//小文列表
+//		pub_post("http://stg.ziwork.com/zikeserver/wap/article/details","{\"id\": \"e6c2df523512bf7e78467463cff3918d\"}");//小文详情
+//		pub_post("http://stg.ziwork.com/zikeserver/wap/voicebook/info","{\"voicebook_id\":\"51dd46e572ee7475da9a3af67b643bf4\", \"type\": 1}");//书详情
+//		pub_post("http://stg.ziwork.com/zikeserver/wap/course/info","{\"course_id\":\"bd8371fddcd070dcc1cfd934f1dafed1\",\"type\":1}");
 	}
 
 }

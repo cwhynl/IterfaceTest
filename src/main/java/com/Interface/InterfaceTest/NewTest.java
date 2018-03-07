@@ -3,25 +3,52 @@ package com.Interface.InterfaceTest;
 import net.sf.json.JSONObject;
 
 import org.apache.http.ParseException;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class NewTest extends HttpclientRequest{
-	public static String imgcode_url="";
-	public static String code="";
-	/**
-	 * 请求短信验证码获得图片验证码
-	 * @throws Exception 
-	 * @throws ParseException 
-	 */
-//  @Test
-//  public void case1() throws Exception {
-//	  String param1="{\"mobile\":\"13700000000\",\"sms\":\"\",\"verifyCode\":\"tttt\",\"login_type\":2,\"from\":2}";
-//	  System.out.println("---"+JSONObject.fromObject(param1));
-//	  JSONObject ob=send_post("http://demo2016.thetiger.com.cn//zikeserver/wap/sms",JSONObject.fromObject(param1),"");
-//	  imgcode_url=ob.getJSONObject("data").getString("imgcode_url");
-//	  send_get(imgcode_url);
-//	  code=uploadimg();
-//  }
+public class NewTest{
+
+	
+	@BeforeSuite
+	public void suite1(){
+		System.out.println("这是BeforeSuite");
+	}
+	@AfterSuite
+	public void suite2(){
+		System.out.println("这是AfterSuite");
+	}
+
+  @Test
+  public void case1() {
+	  System.out.println("这是testcase");
+  }
+  @BeforeTest
+  public void suite3(){
+		System.out.println("这是BeforeTest1");
+	}
+  @AfterTest
+	public void suite4(){
+		System.out.println("这是AfterTest1");
+	}
+  @BeforeClass
+  public void suite5(){
+		System.out.println("这是BeforeClass1");
+	}
+  @AfterClass
+  public void suite6(){
+		System.out.println("这是AfterClass1");
+	}
+  
+
+	}
+  
+  
+  
   /**
    * 根据正确的图片验证码请求短信验证码
    */
@@ -44,4 +71,4 @@ public class NewTest extends HttpclientRequest{
   
   
   
-}
+

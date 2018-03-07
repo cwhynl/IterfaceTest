@@ -58,7 +58,7 @@ public static int d=0;
 	   }	   
 }
 	/**
-	 * 发送get请求
+	 * 发送get请求返回文件流
 	 * @param args
 	 * @throws Exception 
 	 * @throws ParseException 
@@ -108,6 +108,33 @@ public static int d=0;
 		return imgcode;
 	}
 	/**
+	 * 通用的get请求
+	 * @throws IOException 
+	 * @throws UnsupportedOperationException 
+	 */
+	public static void pub_get(String url,Integer inter) throws UnsupportedOperationException, IOException{
+		CloseableHttpClient ch=null;
+		HttpGet get=new HttpGet(url);
+		get.setHeader("accept", "*/*");
+		CloseableHttpResponse response=null;
+
+			ch=HttpClientBuilder.create().build();
+			long from = Long.parseLong(Time()); 
+			response=ch.execute(get);
+			int statecode=response.getStatusLine().getStatusCode();
+			System.out.println("请求状态码"+statecode);
+		
+		HttpEntity entity=response.getEntity();
+		InputStream is=entity.getContent();
+		long to=0;
+		if(response.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+			to =Long.parseLong(Time());
+			int sec = (int) ((to - from));
+			d=sec;
+			System.out.println("用户"+inter+"请求状态码是"+response.getStatusLine().getStatusCode()+";"+"请求时间是："+sec);
+		}
+	}
+	/**
 	 * 设置cookie的方法
 	 */
 	public static void setCookieStore(CloseableHttpResponse httpResponse,String phonenum){
@@ -148,7 +175,7 @@ public static int d=0;
 	 * @param url请求地址
 	 * @param json 请求参数
 	 * @param phonenum 请求手机号码
-	 * @param inter    是否带cookie
+	 * @param inter    是否带cookie，0的时候带上cookie
 	 * @return
 	 */
 	public static JSONObject send_post(String url,JSONObject json,String phonenum,Integer inter){
@@ -184,7 +211,7 @@ public static int d=0;
 				to =Long.parseLong(Time());   
 				String result=EntityUtils.toString(res.getEntity());
 				response = JSONObject.fromObject(result);	
-				System.out.println(response.toString());
+//				System.out.println(response.toString());
 			if(inter==0){
 						 setCookieStore(res,phonenum);
 			}
@@ -197,10 +224,11 @@ public static int d=0;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		}
+		finally{
 			try {
 				res.close();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -249,7 +277,7 @@ public static int d=0;
 					String result=EntityUtils.toString(res.getEntity());
 					response = JSONObject.fromObject(result);
 					String s=response.getJSONObject("data").getString("val");
-//					System.out.println(response.toString());
+					System.out.println(response.toString());
 					if(s!=null){
 						var=s;
 					}

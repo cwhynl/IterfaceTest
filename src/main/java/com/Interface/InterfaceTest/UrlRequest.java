@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,13 @@ import net.sf.json.JSONObject;
 
 public class UrlRequest {
 	
+	public static String Time() {
+		SimpleDateFormat formattime1 = new SimpleDateFormat(
+				"ssSSS");
+		long ctime = System.currentTimeMillis();
+		String currenttime = formattime1.format(new Date(ctime));
+		return currenttime;
+	}
 	/**
 	 * get请求(JDK自带的URLconnection)
 	 * @param args
@@ -28,6 +37,7 @@ public class UrlRequest {
 		URL realurl=new URL(Url);
 		con=(HttpURLConnection) realurl.openConnection();
 		con.setRequestProperty("accept", "*/*");
+		long from = Long.parseLong(Time()); 
 		con.connect();
 		Map<String,List<String>> map=con.getHeaderFields();
 		for(String s:map.keySet()){
@@ -44,8 +54,8 @@ public class UrlRequest {
 	 * @param args
 	 */
 	public  static void send_post() throws Exception{
-		String url="http://demo2016.thetiger.com.cn//zikeserver/wap/sms";
-		String param="{\"mobile\":\"13700000000\",\"sms\":\"1111\",\"verifyCode\":\"ye4h\",\"login_type\":2,\"from\":2}";
+		String url="http://stg.ziwork.com/zikeweb/course/list";
+		String param="{\"page\": 1,\"page_count\": 20,\"type\": 1}";
 		//建立连接
 		HttpURLConnection conn=null;
 		URL realurl=new URL(url);
@@ -62,7 +72,7 @@ public class UrlRequest {
 		ow.append(param);
 		ow.flush();
 		
-		//获取响应内容
+//		获取响应内容
 		BufferedReader in=new BufferedReader(new InputStreamReader(conn.getInputStream(),"GBK"));
 		String r=in.readLine();
 		JSONObject ob=JSONObject.fromObject(r);
@@ -74,7 +84,7 @@ public class UrlRequest {
 	}
 	
     public static void main( String[] args ) throws Exception {	
- 			send_get("http://demo2016.thetiger.com.cn/zikeserver/wap/captchas?t=1512727455","");
+// 			send_get("http://demo2016.thetiger.com.cn/zikeserver/wap/captchas?t=1512727455","");
 //    		 send_get("https://www.baidu.com",""); 
     		 send_post();
     }
