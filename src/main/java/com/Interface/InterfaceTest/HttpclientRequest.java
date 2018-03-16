@@ -35,7 +35,7 @@ import org.apache.http.util.EntityUtils;
 @SuppressWarnings("deprecation")
 public class HttpclientRequest {
 	
-	
+	//返回当前时间的方法
 	public static String Time() {
 		SimpleDateFormat formattime1 = new SimpleDateFormat(
 				"ssSSS");
@@ -43,8 +43,9 @@ public class HttpclientRequest {
 		String currenttime = formattime1.format(new Date(ctime));
 		return currenttime;
 	}
-public static Map<String,CookieStore> cookies=new HashMap<String, CookieStore>();
-public static int d=0;
+   public static Map<String,CookieStore> cookies=new HashMap<String, CookieStore>();
+   public static int d=0;
+   
    public static void listcookie(String phonenum){
 	   CookieStore cookieStore=null;
 	   for(String str:cookies.keySet()){
@@ -117,7 +118,6 @@ public static int d=0;
 		HttpGet get=new HttpGet(url);
 		get.setHeader("accept", "*/*");
 		CloseableHttpResponse response=null;
-
 			ch=HttpClientBuilder.create().build();
 			long from = Long.parseLong(Time()); 
 			response=ch.execute(get);
@@ -206,12 +206,12 @@ public static int d=0;
 			res=ch.execute(post);
 //			listcookie(phonenum);
 			long to=0;
-			System.out.println("用户"+inter+"请求状态码是"+res.getStatusLine().getStatusCode());
+//			System.out.println("用户"+inter+"请求状态码是"+res.getStatusLine().getStatusCode());
 			if(res.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
 				to =Long.parseLong(Time());   
 				String result=EntityUtils.toString(res.getEntity());
 				response = JSONObject.fromObject(result);	
-//				System.out.println(response.toString());
+				System.out.println(response.toString());
 			if(inter==0){
 						 setCookieStore(res,phonenum);
 			}
